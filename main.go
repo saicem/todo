@@ -15,7 +15,7 @@ import (
 // @contact.url  www.saicem.top
 // @contact.email saicem@foxmail.com
 
-// @host 127.0.0.1:8080
+// @host localhost:9101
 // @BasePath /api/v1
 
 func main() {

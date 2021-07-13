@@ -11,6 +11,6 @@ import (
 func RouteEmpty(rg *gin.RouterGroup) {
 	EmptyRouter := rg.Group("")
 	{
-		EmptyRouter.GET("/ping", v1.Ping)
+		EmptyRouter.GET("ping", v1.Ping)
 	}
 }
