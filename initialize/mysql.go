@@ -17,9 +17,11 @@ func InitMysql() {
 
 func migrate() {
 	err := global.Mysql.AutoMigrate(
+		&todomodel.User{},
 		&todomodel.TodoItem{},
 	)
 	if err != nil {
+		fmt.Println(err)
 		fmt.Println("迁移数据库失败")
 		os.Exit(0)
 	}
