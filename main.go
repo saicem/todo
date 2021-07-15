@@ -20,9 +20,12 @@ import (
 
 func main() {
 	initialize.InitMysql()
+	initialize.InitRedis()
 	engine := initialize.InitRouter()
 	err := engine.Run(":" + config.ProjectPort)
 	if err != nil {
 		fmt.Println(err)
 	}
 }
+
+// redis todo 该怎么用？

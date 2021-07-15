@@ -1,10 +1,8 @@
 package todomodel
 
-import "gorm.io/gorm"
-
 type User struct {
-	gorm.Model
+	Uid       uint `gorm:"primaryKey"`
 	NickName  string
 	Password  string
-	TodoItems []TodoItem `gorm:"foreignKey:ID"`
+	TodoItems []TodoItem `gorm:"foreignKey:Uid"`
 }

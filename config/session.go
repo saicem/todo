@@ -1,6 +1,6 @@
 package config
 
 type Session struct {
-	MaxAge int    `toml:"max_age"`
+	MaxAge int    `toml:"maxage"`
 	Domain string `toml:"domain"`
 }

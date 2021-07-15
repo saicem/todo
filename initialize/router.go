@@ -17,6 +17,7 @@ func InitRouter() *gin.Engine {
 	BasicGroup := engine.Group("api/v1")
 	router.RouteEmpty(BasicGroup)
 	router.RouteTodo(BasicGroup)
+	router.RouteUser(BasicGroup)
 
 	return engine
 }
