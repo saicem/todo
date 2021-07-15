@@ -24,23 +24,23 @@ func Login(c *gin.Context) {
 	password := c.Query("password")
 	if isValid := SearchUser(userName, password); !isValid {
 		c.JSON(http.StatusOK, response.Response{Status: response.ERROR, Message: "未通过验证"})
-	} else {
-		sessionId := RandString(50)
-		maxAge := global.Config.Session.MaxAge
-		domain := global.Config.Session.Domain
-		c.SetCookie("SESSIONID", sessionId, maxAge, "/", domain, false, true)
-		r := global.Redis.Get()
-		if _, err := r.Do("SET", sessionId, 1, "EX", maxAge); err != nil {
-			panic("发送")
-		}
-		defer func(r redis.Conn) {
-			err := r.Close()
-			if err != nil {
-				panic("关不掉？？")
-			}
-		}(r)
-		c.JSON(http.StatusOK, response.Response{Status: response.OK, Message: "登录成功"})
+		return
 	}
+	sessionId := RandString(50)
+	maxAge := global.Config.Session.MaxAge
+	domain := global.Config.Session.Domain
+	c.SetCookie("SESSIONID", sessionId, maxAge, "/", domain, false, true)
+	r := global.Redis.Get()
+	if _, err := r.Do("SET", sessionId, 1, "EX", maxAge); err != nil {
+		panic("发送")
+	}
+	defer func(r redis.Conn) {
+		err := r.Close()
+		if err != nil {
+			panic("关不掉？？")
+		}
+	}(r)
+	c.JSON(http.StatusOK, response.Response{Status: response.OK, Message: "登录成功"})
 }
 
 func SearchUser(userName string, password string) bool {
