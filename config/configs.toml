@@ -14,3 +14,6 @@ addr = "127.0.0.1:6379"
 [session]
 maxage = 600
 domain = "localhost"
+
+[web]
+cors = 'http://localhost:8080'

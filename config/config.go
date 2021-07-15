@@ -10,6 +10,7 @@ type Config struct {
 	Mysql   MySQL   `toml:"mysql"`
 	Session Session `toml:"session"`
 	Redis   Redis   `toml:"redis"`
+	Web     Web     `toml:"web"`
 }
 
 func init() {
