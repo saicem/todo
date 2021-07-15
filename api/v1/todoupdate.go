@@ -10,14 +10,14 @@ import (
 	"net/http"
 )
 
-// TodoChange
-// @Summary TodoChange
+// TodoUpdate
+// @Summary TodoUpdate
 // @Description 修改一个todo
-// @Router /vtodo/change [post]
+// @Router /vtodo/update [post]
 // @Param todo_id query int true "todo的ID"
 // @Param json body request.TodoItemReq true "修改后的todo"
 // @Success 200 object response.Response
-func TodoChange(c *gin.Context) {
+func TodoUpdate(c *gin.Context) {
 	// 读取参数
 	var todoItemReq request.TodoItemReq
 	rawData, err1 := c.GetRawData()

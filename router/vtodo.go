@@ -12,7 +12,7 @@ func RouteTodo(rg *gin.RouterGroup) {
 		TodoRouter.POST("add", v1.TodoAdd)
 		TodoRouter.GET("get", v1.TodoGet)
 		TodoRouter.POST("complete", v1.TodoComplete)
-		TodoRouter.POST("change", v1.TodoChange)
+		TodoRouter.POST("update", v1.TodoUpdate)
 		TodoRouter.DELETE("delete", v1.TodoDelete)
 	}
 }
