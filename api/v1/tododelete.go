@@ -30,11 +30,14 @@ func TodoDelete(c *gin.Context) {
 	cookie, _ := c.Cookie("SESSIONID")
 	userId, _ := middleware.GetUserIdFromCookie(cookie)
 	var todoItem todomodel.TodoItem
-	db.Where("uid = ? AND id = ?", userId, todoId).Find(todoItem)
+	db.Where("uid = ? AND id = ?", userId, todoId).Find(&todoItem)
+	if &todoItem == nil {
+		panic("待解决")
+	}
 	db.Delete(&todoItem)
 	c.JSON(http.StatusOK, response.Response{
 		Status:  response.OK,
-		Message: "ads",
+		Message: "success",
 		Data:    nil,
 	})
 }
