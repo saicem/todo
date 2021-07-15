@@ -28,7 +28,7 @@ func TodoDelete(c *gin.Context) {
 	}
 	// 从cookie 获取 userId
 	cookie, _ := c.Cookie("SESSIONID")
-	userId := middleware.GetUserIdFromCookie(cookie)
+	userId, _ := middleware.GetUserIdFromCookie(cookie)
 	var todoItem todomodel.TodoItem
 	db.Where("uid = ? AND id = ?", userId, todoId).Find(todoItem)
 	db.Delete(&todoItem)

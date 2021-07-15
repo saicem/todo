@@ -34,7 +34,7 @@ func SearchSession(sessionId string) bool {
 	return false
 }
 
-func GetUserIdFromCookie(sessionId string) uint {
+func GetUserIdFromCookie(sessionId string) (uint, bool) {
 	r := global.Redis.Get()
 	defer func(r redis.Conn) {
 		err := r.Close()
@@ -42,9 +42,9 @@ func GetUserIdFromCookie(sessionId string) uint {
 			panic("关不掉？？")
 		}
 	}(r)
-	// 不能直接转换为 uint 所以先 uint64 再 uint
-	if userId, err := redis.Uint64(r.Do("GET", sessionId)); err == nil {
-		return uint(userId)
+	// 不能直接转换为 uint 所以先 int 再 uint
+	if userId, err := redis.Int(r.Do("GET", sessionId)); err == nil {
+		return uint(userId), true
 	}
-	return -1
+	return 0, false
 }

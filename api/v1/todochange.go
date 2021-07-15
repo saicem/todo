@@ -40,7 +40,7 @@ func TodoChange(c *gin.Context) {
 	todoId := c.Query("todo_id")
 	// 从cookie 获取 userId
 	cookie, _ := c.Cookie("SESSIONID")
-	userId := middleware.GetUserIdFromCookie(cookie)
+	userId, _ := middleware.GetUserIdFromCookie(cookie)
 	// 查询数据库
 	db := global.Mysql
 	var todoItem todomodel.TodoItem

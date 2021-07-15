@@ -39,7 +39,7 @@ func TodoAdd(c *gin.Context) {
 	// 从cookie 获取 userId
 	// todo 前边已经已经使用 sessionid 读取过了 userid 这里又读取了一遍 如何解决
 	cookie, _ := c.Cookie("SESSIONID")
-	userId := middleware.GetUserIdFromCookie(cookie)
+	userId, _ := middleware.GetUserIdFromCookie(cookie)
 	// 存储数据
 	db := global.Mysql
 	db.Create(&todomodel.TodoItem{
