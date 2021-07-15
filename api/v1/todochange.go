@@ -3,11 +3,10 @@ package v1
 import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"github.com/saicem/todo/global"
+	"github.com/saicem/todo/db"
 	"github.com/saicem/todo/middleware"
 	"github.com/saicem/todo/model/request"
 	"github.com/saicem/todo/model/response"
-	"github.com/saicem/todo/model/todomodel"
 	"net/http"
 )
 
@@ -42,19 +41,14 @@ func TodoChange(c *gin.Context) {
 	cookie, _ := c.Cookie("SESSIONID")
 	userId, _ := middleware.GetUserIdFromCookie(cookie)
 	// 查询数据库
-	db := global.Mysql
-	var todoItem todomodel.TodoItem
-	db.Find(&todoItem, "uid = ? AND id = ?", userId, todoId)
-	if &todoItem == nil {
+	isSuccess := db.UpdateTodoItem(userId, todoItemReq, todoId)
+	if isSuccess == false {
 		c.JSON(http.StatusOK, response.Response{
 			Status:  response.ERROR,
-			Message: "错误的 todo_id",
+			Message: "error",
 		})
+		return
 	}
-	// 修改数据库
-	todoItem.Importance = todoItemReq.Importance
-	todoItem.Content = todoItemReq.Content
-	db.Save(&todoItem)
 	c.JSON(http.StatusOK, response.Response{
 		Status:  response.OK,
 		Message: "修改一个todo",

@@ -3,11 +3,10 @@ package v1
 import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"github.com/saicem/todo/global"
+	"github.com/saicem/todo/db"
 	"github.com/saicem/todo/middleware"
 	"github.com/saicem/todo/model/request"
 	"github.com/saicem/todo/model/response"
-	"github.com/saicem/todo/model/todomodel"
 	"net/http"
 )
 
@@ -39,14 +38,9 @@ func TodoAdd(c *gin.Context) {
 	// 从cookie 获取 userId
 	// todo 前边已经已经使用 sessionid 读取过了 userid 这里又读取了一遍 如何解决
 	cookie, _ := c.Cookie("SESSIONID")
-	userId, _ := middleware.GetUserIdFromCookie(cookie)
+	uid, _ := middleware.GetUserIdFromCookie(cookie)
 	// 存储数据
-	db := global.Mysql
-	db.Create(&todomodel.TodoItem{
-		Importance: todoItemReq.Importance,
-		Content:    todoItemReq.Content,
-		Uid:        userId,
-	})
+	db.CreateTodoItem(uid, todoItemReq)
 	c.JSON(http.StatusOK, response.Response{
 		Status:  response.OK,
 		Message: "success",

@@ -2,10 +2,9 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/saicem/todo/global"
+	"github.com/saicem/todo/db"
 	"github.com/saicem/todo/middleware"
 	"github.com/saicem/todo/model/response"
-	"github.com/saicem/todo/model/todomodel"
 	"net/http"
 )
 
@@ -25,23 +24,18 @@ func TodoComplete(c *gin.Context) {
 		})
 		return
 	}
-	// 从cookie 获取 userId
+	// 从cookie 获取 uid
 	cookie, _ := c.Cookie("SESSIONID")
-	userId, _ := middleware.GetUserIdFromCookie(cookie)
+	uid, _ := middleware.GetUserIdFromCookie(cookie)
 	// 查询数据库
-	db := global.Mysql
-	var todoItem todomodel.TodoItem
-	db.Find(&todoItem, "uid = ? AND id = ?", userId, todoId)
-	if &todoItem == nil {
+	isSuccess := db.CompleteTodoItem(uid, todoId)
+	if !isSuccess {
 		c.JSON(http.StatusOK, response.Response{
 			Status:  response.ERROR,
 			Message: "错误的 todo_id",
 		})
+		return
 	}
-	// 修改数据库
-	todoItem.Complete = true
-	db.Save(&todoItem)
-	// 返回
 	c.JSON(http.StatusOK, response.Response{
 		Status:  response.OK,
 		Message: "ok",
