@@ -5,9 +5,10 @@ import (
 )
 
 type TodoItem struct {
-	gorm.Model
-	Complete   bool
-	Importance int
-	Content    string
-	Uid        uint
+	gorm.Model `json:"gorm_model"`
+	Complete   bool   `json:"complete,omitempty"`
+	Importance int    `json:"importance,omitempty"`
+	Content    string `json:"content,omitempty"`
+	Tag        string `json:"tag,omitempty"`
+	Uid        uint   `json:"uid,omitempty"`
 }
