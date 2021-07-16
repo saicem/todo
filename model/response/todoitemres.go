@@ -4,10 +4,10 @@ import "github.com/saicem/todo/model/todomodel"
 
 type TodoItemRes struct {
 	ID         uint   `json:"id"`
-	Complete   bool   `json:"complete,omitempty"`
-	Importance int    `json:"importance,omitempty"`
-	Content    string `json:"content,omitempty"`
-	Tag        string `json:"tag,omitempty"`
+	Complete   bool   `json:"complete"`
+	Importance int    `json:"importance"`
+	Content    string `json:"content"`
+	Tag        string `json:"tag"`
 }
 
 func (r TodoItemRes) New(item *todomodel.TodoItem) *TodoItemRes {
