@@ -3,7 +3,6 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/saicem/todo/db"
-	"github.com/saicem/todo/middleware"
 	"github.com/saicem/todo/model/request"
 	"github.com/saicem/todo/model/response"
 	"net/http"
@@ -23,10 +22,9 @@ func TodoPut(c *gin.Context) {
 		return
 	}
 	todoId := c.Param("id")
-	cookie, _ := c.Cookie("SESSIONID")
-	userId, _ := middleware.GetUserIdFromCookie(cookie)
+	userId, _ := c.Get("userId")
 	// 查询数据库
-	isSuccess := db.UpdateTodoItem(userId, todoItemReq, todoId)
+	isSuccess := db.UpdateTodoItem(userId.(int), todoItemReq, todoId)
 	if isSuccess == false {
 		c.AbortWithStatus(http.StatusNotAcceptable)
 	}

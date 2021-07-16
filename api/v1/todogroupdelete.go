@@ -3,7 +3,6 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/saicem/todo/db"
-	"github.com/saicem/todo/middleware"
 	"github.com/saicem/todo/model/response"
 	"net/http"
 )
@@ -16,9 +15,8 @@ import (
 // @Success 200 object response.Response
 func TodoGroupDelete(c *gin.Context) {
 	todoGroupId := c.Param("id")
-	cookie, _ := c.Cookie("SESSIONID")
-	userId, _ := middleware.GetUserIdFromCookie(cookie)
-	isSuccess := db.DeleteTodoGroup(userId, todoGroupId)
+	userId, _ := c.Get("userId")
+	isSuccess := db.DeleteTodoGroup(userId.(int), todoGroupId)
 	if !isSuccess {
 		c.AbortWithStatus(http.StatusNotAcceptable)
 		return
