@@ -18,6 +18,7 @@ func InitMysql() {
 func migrate() {
 	err := global.Mysql.AutoMigrate(
 		&todomodel.User{},
+		&todomodel.TodoGroup{},
 		&todomodel.TodoItem{},
 	)
 	if err != nil {

@@ -1,14 +1,13 @@
 package todomodel
 
-import (
-	"gorm.io/gorm"
-)
+import "time"
 
 type TodoItem struct {
-	gorm.Model `json:"gorm_model"`
-	Complete   bool   `json:"complete"`
-	Importance int    `json:"importance"`
-	Content    string `json:"content"`
-	Tag        string `json:"tag"`
-	Uid        uint   `json:"uid"`
+	TodoId      int       `json:"todo_id" gorm:"primaryKey"`
+	UserId      int       `json:"user_id,omitempty"`
+	TodoGroupId int       `json:"todo_group_id,omitempty"`
+	TodoTitle   string    `json:"todo_title"`
+	TodoContent string    `json:"todo_content,omitempty"`
+	IsFinished  bool      `json:"todo_finish,omitempty"`
+	CreateAt    time.Time `json:"create_at" gorm:"autoCreateTime"`
 }

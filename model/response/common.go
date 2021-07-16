@@ -1,7 +1,6 @@
 package response
 
 type Response struct {
-	Status  ApiCode     `json:"status"`
-	Message string      `json:"message,omitempty"`
-	Data    interface{} `json:"data,omitempty"`
+	Msg  string      `json:"msg,omitempty"`
+	Data interface{} `json:"data,omitempty"`
 }

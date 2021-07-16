@@ -3,9 +3,10 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gomodule/redigo/redis"
+	"github.com/saicem/todo/db"
 	"github.com/saicem/todo/global"
+	"github.com/saicem/todo/model/request"
 	"github.com/saicem/todo/model/response"
-	"github.com/saicem/todo/model/todomodel"
 	"math/rand"
 	"net/http"
 	"time"
@@ -14,19 +15,22 @@ import (
 // Login
 // @Summary Login
 // @Description 用户登录
-// @Param uid query string true "用户ID"
-// @Param password query string true "密码"
+// @Param json body request.LoginForm true "登录表单"
 // @Router /user/login [post]
 // @Success 200 object response.Response
 func Login(c *gin.Context) {
 	// 获取参数
-	userName := c.Query("uid")
-	password := c.Query("password")
-	if isValid := SearchUser(userName, password); !isValid {
-		c.JSON(http.StatusOK, response.Response{Status: response.ERROR, Message: "未通过验证"})
+	var loginForm request.LoginForm
+	if err := c.BindJSON(&loginForm); err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
-	sessionId := RandString(50)
+	_, isValid := db.SearchUser(loginForm.Username, loginForm.Password)
+	if !isValid {
+		c.AbortWithStatus(http.StatusUnauthorized)
+		return
+	}
+	sessionId := randString(50)
 	maxAge := global.Config.Session.MaxAge
 	domain := global.Config.Session.Domain
 	c.SetCookie("SESSIONID", sessionId, maxAge, "/", domain, false, true)
@@ -40,21 +44,10 @@ func Login(c *gin.Context) {
 			panic("关不掉？？")
 		}
 	}(r)
-	c.JSON(http.StatusOK, response.Response{Status: response.OK, Message: "登录成功"})
+	c.JSON(http.StatusOK, response.Response{Msg: "登录成功"})
 }
 
-func SearchUser(userName string, password string) bool {
-	db := global.Mysql
-	var user todomodel.User
-	// todo 判断存在的更好的方式
-	res := db.Where("uid = ? AND password = ?", userName, password).First(&user)
-	if res.Error != nil {
-		return false
-	}
-	return true
-}
-
-func RandString(length int) string {
+func randString(length int) string {
 	str := "0123456789QWERTYUIOPASDFGHJKLZXCVBNM"
 	bytes := []byte(str)
 	var result []byte

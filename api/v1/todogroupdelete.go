@@ -8,19 +8,20 @@ import (
 	"net/http"
 )
 
-// TodoDelete
-// @Summary TodoDelete
-// @Description 删除一个todo
-// @Router /todo/{id} [delete]
-// @Param id path int true "TodoId"
+// TodoGroupDelete
+// @Summary TodoGroupDelete
+// @Description 删除一个 TodoGroup
+// @Router /todo_group/{id} [delete]
+// @Param id path int true "TodoGroupID"
 // @Success 200 object response.Response
-func TodoDelete(c *gin.Context) {
-	todoId := c.Param("id")
+func TodoGroupDelete(c *gin.Context) {
+	todoGroupId := c.Param("id")
 	cookie, _ := c.Cookie("SESSIONID")
 	userId, _ := middleware.GetUserIdFromCookie(cookie)
-	isSuccess := db.DeleteTodoItem(userId, todoId)
+	isSuccess := db.DeleteTodoGroup(userId, todoGroupId)
 	if !isSuccess {
 		c.AbortWithStatus(http.StatusNotAcceptable)
+		return
 	}
 	c.JSON(http.StatusOK, response.Response{
 		Msg: "success",

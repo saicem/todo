@@ -8,19 +8,17 @@ import (
 	"net/http"
 )
 
-// TodoGet
-// @Summary TodoGet
-// @Description 查看已有的todo
-// @Router /todo/list [get]
+// TodoGroupGet
+// @Summary TodoGroupGet
+// @Description 查看已有的TodoGroup
+// @Router /todo_group/list [get]
 // @Success 200 object response.Response
-func TodoGet(c *gin.Context) {
-	// 从cookie 获取 userId
+func TodoGroupGet(c *gin.Context) {
 	cookie, _ := c.Cookie("SESSIONID")
 	userId, _ := middleware.GetUserIdFromCookie(cookie)
-	todoItems := db.GetTodoItems(userId)
+	todoGroups := db.GetTodoGroups(userId)
 	c.JSON(http.StatusOK, response.Response{
 		Msg:  "success",
-		Data: todoItems,
+		Data: todoGroups,
 	})
-	return
 }

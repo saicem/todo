@@ -9,6 +9,7 @@ func RouteUser(rg *gin.RouterGroup) {
 	Router := rg.Group("user")
 	{
 		Router.POST("login", v1.Login)
-		//Router.POST("out", v1.UserLogout)
+		//Router.POST("logout",v1.Logout)
+		//Router.POST("register", v1.Register)
 	}
 }

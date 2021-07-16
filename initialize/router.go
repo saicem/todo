@@ -19,6 +19,7 @@ func InitRouter() *gin.Engine {
 	router.RouteEmpty(BasicGroup)
 	router.RouteTodo(BasicGroup)
 	router.RouteUser(BasicGroup)
+	router.RouteTodoGroup(BasicGroup)
 
 	return engine
 }
