@@ -3,13 +3,19 @@ package db
 import (
 	"github.com/saicem/todo/global"
 	"github.com/saicem/todo/model/request"
+	"github.com/saicem/todo/model/response"
 	"github.com/saicem/todo/model/todomodel"
 )
 
-func GetTodoItems(uid uint) *[]todomodel.TodoItem {
+func GetTodoItems(uid uint) *[]response.TodoItemRes {
 	var todoItems []todomodel.TodoItem
 	global.Mysql.Where("uid = ?", uid).Find(&todoItems)
-	return &todoItems
+	var todoItemsRes = make([]response.TodoItemRes, len(todoItems))
+	for i := 0; i < len(todoItems); i++ {
+		todoItemsRes[i] = *new(response.TodoItemRes).New(&todoItems[i])
+	}
+
+	return &todoItemsRes
 }
 
 func CreateTodoItem(uid uint, req request.TodoItemReq) bool {
