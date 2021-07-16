@@ -22,6 +22,7 @@ func CreateTodoItem(uid uint, req request.TodoItemReq) bool {
 	global.Mysql.Create(&todomodel.TodoItem{
 		Importance: req.Importance,
 		Content:    req.Content,
+		Tag:        req.Tag,
 		Uid:        uid,
 	})
 	return true
