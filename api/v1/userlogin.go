@@ -2,7 +2,6 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/gomodule/redigo/redis"
 	"github.com/saicem/todo/db"
 	"github.com/saicem/todo/global"
 	"github.com/saicem/todo/model/request"
@@ -22,10 +21,10 @@ func Login(c *gin.Context) {
 	// 获取参数
 	var loginForm request.LoginForm
 	if err := c.BindJSON(&loginForm); err != nil {
-		c.AbortWithStatus(http.StatusBadRequest)
+		c.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
-	_, isValid := db.SearchUser(loginForm.Username, loginForm.Password)
+	user, isValid := db.SearchUser(loginForm.Username, loginForm.Password)
 	if !isValid {
 		c.AbortWithStatus(http.StatusUnauthorized)
 		return
@@ -34,16 +33,7 @@ func Login(c *gin.Context) {
 	maxAge := global.Config.Session.MaxAge
 	domain := global.Config.Session.Domain
 	c.SetCookie("SESSIONID", sessionId, maxAge, "/", domain, false, true)
-	r := global.Redis.Get()
-	if _, err := r.Do("SET", sessionId, 1, "EX", maxAge); err != nil {
-		panic("发送")
-	}
-	defer func(r redis.Conn) {
-		err := r.Close()
-		if err != nil {
-			panic("关不掉？？")
-		}
-	}(r)
+	db.SetSession(sessionId, user.UserId)
 	c.JSON(http.StatusOK, response.Response{Msg: "登录成功"})
 }
 
