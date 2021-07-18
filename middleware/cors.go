@@ -9,5 +9,4 @@ func Cors(c *gin.Context) {
 	cors := global.Config.Web.Cors
 	c.Header("Access-Control-Allow-Credentials", "true")
 	c.Header("Access-Control-Allow-Origin", cors)
-	return
 }

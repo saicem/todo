@@ -1,9 +1,10 @@
 package middleware
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/saicem/todo/db"
-	"net/http"
 )
 
 func Authentication(c *gin.Context) {
@@ -16,5 +17,4 @@ func Authentication(c *gin.Context) {
 		}
 		c.Set("userId", userId)
 	}
-	return
 }

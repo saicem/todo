@@ -1,11 +1,12 @@
 package v1
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/saicem/todo/db"
 	"github.com/saicem/todo/model/request"
 	"github.com/saicem/todo/model/response"
-	"net/http"
 )
 
 // TodoPut
@@ -24,7 +25,7 @@ func TodoPut(c *gin.Context) {
 	userId, _ := c.Get("userId")
 	// 查询数据库
 	isSuccess := db.UpdateTodoItem(userId.(int), todoItemReq, todoId)
-	if isSuccess == false {
+	if !isSuccess {
 		c.AbortWithStatus(http.StatusNotAcceptable)
 	}
 	c.JSON(http.StatusOK, response.Response{

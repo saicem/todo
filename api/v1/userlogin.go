@@ -1,14 +1,15 @@
 package v1
 
 import (
+	"math/rand"
+	"net/http"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/saicem/todo/db"
 	"github.com/saicem/todo/global"
 	"github.com/saicem/todo/model/request"
 	"github.com/saicem/todo/model/response"
-	"math/rand"
-	"net/http"
-	"time"
 )
 
 // Login

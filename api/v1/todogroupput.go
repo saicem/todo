@@ -1,11 +1,12 @@
 package v1
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/saicem/todo/db"
 	"github.com/saicem/todo/model/request"
 	"github.com/saicem/todo/model/response"
-	"net/http"
 )
 
 // TodoGroupPut
@@ -24,7 +25,7 @@ func TodoGroupPut(c *gin.Context) {
 		return
 	}
 	isSuccess := db.UpdateTodoGroup(userId.(int), todoGroupReq, todoGroupId)
-	if isSuccess == false {
+	if !isSuccess {
 		c.AbortWithStatus(http.StatusNotAcceptable)
 		return
 	}

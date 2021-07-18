@@ -1,9 +1,10 @@
 package v1
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/saicem/todo/model/request"
-	"net/http"
 )
 
 func Register(c *gin.Context) {

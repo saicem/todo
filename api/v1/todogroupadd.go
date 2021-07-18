@@ -1,11 +1,12 @@
 package v1
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/saicem/todo/db"
 	"github.com/saicem/todo/model/request"
 	"github.com/saicem/todo/model/response"
-	"net/http"
 )
 
 // TodoGroupAdd
