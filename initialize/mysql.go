@@ -2,11 +2,12 @@ package initialize
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/saicem/todo/global"
 	"github.com/saicem/todo/model/todomodel"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"os"
 )
 
 func InitMysql() {
@@ -26,7 +27,6 @@ func migrate() {
 		fmt.Println("迁移数据库失败")
 		os.Exit(0)
 	}
-
 }
 
 func NewConn() {

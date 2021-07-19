@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"log"
+
 	"github.com/saicem/todo/config"
 	_ "github.com/saicem/todo/docs"
 	"github.com/saicem/todo/initialize"
@@ -24,7 +25,7 @@ func main() {
 	engine := initialize.InitRouter()
 	err := engine.Run(":" + config.ProjectPort)
 	if err != nil {
-		fmt.Println(err)
+		log.Panicln(err)
 	}
 }
 

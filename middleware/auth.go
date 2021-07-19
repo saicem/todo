@@ -15,6 +15,6 @@ func Authentication(c *gin.Context) {
 		if !isValid {
 			c.AbortWithStatus(http.StatusUnauthorized)
 		}
-		c.Set("userId", userId)
+		c.Set("USERID", userId)
 	}
 }

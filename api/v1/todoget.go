@@ -14,7 +14,7 @@ import (
 // @Router /todo/list [get]
 // @Success 200 object response.Response
 func TodoGet(c *gin.Context) {
-	userId, _ := c.Get("userId")
+	userId, _ := c.Get("USERID")
 	todoItems := db.GetTodoItems(userId.(int))
 	c.JSON(http.StatusOK, response.Response{
 		Msg:  "success",

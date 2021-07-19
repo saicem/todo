@@ -11,6 +11,7 @@ type Config struct {
 	Session Session `toml:"session"`
 	Redis   Redis   `toml:"redis"`
 	Web     Web     `toml:"web"`
+	Email   Email   `toml:"email"`
 }
 
 func init() {

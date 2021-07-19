@@ -7,11 +7,11 @@ import (
 )
 
 func RouteTodo(rg *gin.RouterGroup) {
-	TodoRouter := rg.Group("todo", middleware.Authentication)
+	router := rg.Group("todo", middleware.Authentication)
 	{
-		TodoRouter.POST("add", v1.TodoAdd)
-		TodoRouter.GET("list", v1.TodoGet)
-		TodoRouter.PUT(":id", v1.TodoPut)
-		TodoRouter.DELETE(":id", v1.TodoDelete)
+		router.POST("add", v1.TodoAdd)
+		router.GET("list", v1.TodoGet)
+		router.PUT(":id", v1.TodoPut)
+		router.DELETE(":id", v1.TodoDelete)
 	}
 }

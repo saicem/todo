@@ -16,7 +16,7 @@ import (
 // @Router /todo/add [post]
 // @Success 200 object response.Response
 func TodoAdd(c *gin.Context) {
-	userId, _ := c.Get("userId")
+	userId, _ := c.Get("USERID")
 	var todoItemReq request.TodoItemReq1
 	if err := c.BindJSON(&todoItemReq); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)

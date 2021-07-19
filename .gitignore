@@ -2,3 +2,4 @@
 /docs
 /.idea
 *_test.go
+golangci.yaml

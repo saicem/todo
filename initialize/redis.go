@@ -1,7 +1,9 @@
 package initialize
 
-import "github.com/saicem/todo/global"
-import "github.com/gomodule/redigo/redis"
+import (
+	"github.com/gomodule/redigo/redis"
+	"github.com/saicem/todo/global"
+)
 
 func InitRedis() {
 	// todo redis 验证是否成功连接 redis

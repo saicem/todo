@@ -16,7 +16,7 @@ import (
 // @Success 200 object response.Response
 func TodoGroupDelete(c *gin.Context) {
 	todoGroupId := c.Param("id")
-	userId, _ := c.Get("userId")
+	userId, _ := c.Get("USERID")
 	isSuccess := db.DeleteTodoGroup(userId.(int), todoGroupId)
 	if !isSuccess {
 		c.AbortWithStatus(http.StatusNotAcceptable)

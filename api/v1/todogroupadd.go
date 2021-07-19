@@ -16,7 +16,7 @@ import (
 // @Router /todo_group/add [post]
 // @Success 200 object response.Response
 func TodoGroupAdd(c *gin.Context) {
-	userId, _ := c.Get("userId")
+	userId, _ := c.Get("USERID")
 	var todoGroupReq request.TodoGroupReq
 	if err := c.BindJSON(&todoGroupReq); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)

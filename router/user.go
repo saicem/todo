@@ -6,10 +6,11 @@ import (
 )
 
 func RouteUser(rg *gin.RouterGroup) {
-	Router := rg.Group("user")
+	router := rg.Group("user")
 	{
-		Router.POST("login", v1.Login)
-		Router.POST("logout", v1.Logout)
-		Router.POST("register", v1.Register)
+		router.POST("login", v1.Login)
+		router.POST("logout", v1.Logout)
+		router.POST("register", v1.Register)
+		router.POST("captcha", v1.Captcha)
 	}
 }

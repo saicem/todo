@@ -14,7 +14,7 @@ import (
 // @Router /todo_group/list [get]
 // @Success 200 object response.Response
 func TodoGroupGet(c *gin.Context) {
-	userId, _ := c.Get("userId")
+	userId, _ := c.Get("USERID")
 	todoGroups := db.GetTodoGroups(userId.(int))
 	c.JSON(http.StatusOK, response.Response{
 		Msg:  "success",

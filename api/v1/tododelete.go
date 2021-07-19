@@ -16,7 +16,7 @@ import (
 // @Success 200 object response.Response
 func TodoDelete(c *gin.Context) {
 	todoId := c.Param("id")
-	userId, _ := c.Get("userId")
+	userId, _ := c.Get("USERID")
 	isSuccess := db.DeleteTodoItem(userId.(int), todoId)
 	if !isSuccess {
 		c.AbortWithStatus(http.StatusNotAcceptable)

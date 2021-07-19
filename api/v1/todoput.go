@@ -22,7 +22,7 @@ func TodoPut(c *gin.Context) {
 		return
 	}
 	todoId := c.Param("id")
-	userId, _ := c.Get("userId")
+	userId, _ := c.Get("USERID")
 	// 查询数据库
 	isSuccess := db.UpdateTodoItem(userId.(int), todoItemReq, todoId)
 	if !isSuccess {

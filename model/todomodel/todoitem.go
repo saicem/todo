@@ -8,6 +8,6 @@ type TodoItem struct {
 	TodoGroupId int       `json:"todo_group_id,omitempty"`
 	TodoTitle   string    `json:"todo_title"`
 	TodoContent string    `json:"todo_content,omitempty"`
-	IsFinished  bool      `json:"todo_finish,omitempty"`
+	IsFinished  bool      `json:"is_finish,omitempty"`
 	CreateAt    time.Time `json:"create_at" gorm:"autoCreateTime"`
 }

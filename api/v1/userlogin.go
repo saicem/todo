@@ -38,9 +38,10 @@ func Login(c *gin.Context) {
 	c.JSON(http.StatusOK, response.Response{Msg: "登录成功"})
 }
 
+// randString
+// 生成长 length 的由大写字母和数字组成的随机字符串
 func randString(length int) string {
-	str := "0123456789QWERTYUIOPASDFGHJKLZXCVBNM"
-	bytes := []byte(str)
+	bytes := []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 	var result []byte
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for i := 0; i < length; i++ {

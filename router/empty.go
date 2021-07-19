@@ -9,8 +9,8 @@ import (
 // @Summary ping
 // @Description ping
 func RouteEmpty(rg *gin.RouterGroup) {
-	EmptyRouter := rg.Group("")
+	router := rg.Group("")
 	{
-		EmptyRouter.GET("ping", v1.Ping)
+		router.GET("ping", v1.Ping)
 	}
 }
