@@ -5,7 +5,7 @@ import (
 	"gopkg.in/gomail.v2"
 )
 
-func SendMail(toEmailAddress string, subject string, text string) error {
+func SendCaptchaEmail(toEmailAddress string, subject string, text string) error {
 	config := global.Config.Email
 	m := gomail.NewMessage()
 	// 发件人

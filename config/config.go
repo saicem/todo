@@ -1,6 +1,9 @@
 package config
 
 import (
+	"log"
+
+	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
 
@@ -27,13 +30,13 @@ func init() {
 		panic(err)
 	}
 
-	//viper.WatchConfig()
-	//viper.OnConfigChange(func(e fsnotify.Event) {
-	//	fmt.Printf("配置已改变：%s", e.Name)
-	//	if err := viper.Unmarshal(config); err != nil {
-	//		panic(err)
-	//	}
-	//})
+	viper.WatchConfig()
+	viper.OnConfigChange(func(e fsnotify.Event) {
+		log.Printf("配置已改变：%s", e.Name)
+		if err := viper.Unmarshal(config); err != nil {
+			panic(err)
+		}
+	})
 }
 
 func Get() *Config {

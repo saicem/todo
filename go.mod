@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-gomail/gomail v0.0.0-20160411212932-81ebce5c23df // indirect
 	github.com/go-openapi/jsonreference v0.19.6 // indirect

@@ -1,7 +1,7 @@
 package initialize
 
 import (
-	"fmt"
+	"log"
 	"os"
 
 	"github.com/saicem/todo/global"
@@ -11,7 +11,7 @@ import (
 )
 
 func InitMysql() {
-	fmt.Println("init mysql ... ... ")
+	log.Println("init mysql ... ... ")
 	NewConn()
 	migrate()
 }
@@ -23,8 +23,8 @@ func migrate() {
 		&todomodel.TodoItem{},
 	)
 	if err != nil {
-		fmt.Println(err)
-		fmt.Println("迁移数据库失败")
+		log.Println(err)
+		log.Println("迁移数据库失败")
 		os.Exit(0)
 	}
 }
@@ -36,6 +36,6 @@ func NewConn() {
 		panic(err)
 	} else {
 		global.Mysql = db
-		fmt.Println("new mysql conn ...")
+		log.Println("new mysql conn ...")
 	}
 }

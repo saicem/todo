@@ -24,13 +24,6 @@ func InitRouter() *gin.Engine {
 }
 
 func initSwagger(engine *gin.Engine) {
-	//cmd := exec.Command("swag", "init")
-	//cmd.Stdout = os.Stdout
-	//err := cmd.Run()
-	//if err != nil {
-	//	// todo 更高的错误等级
-	//	panic(err)
-	//}
 	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	log.Printf("open swagger UI http://localhost:%s/swagger/index.html\n", config.ProjectPort)
 }
