@@ -47,7 +47,7 @@ func Captcha(c *gin.Context) {
 	// clientIp := c.ClientIP()
 	toEmailAddress := c.Query("email")
 	captcha := randNum(6)
-	if err := middleware.SendCaptchaEmail(toEmailAddress, "TODO 验证码", captcha); err != nil {
+	if err := middleware.SendCaptchaEmail(toEmailAddress, captcha); err != nil {
 		log.Println(err)
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
