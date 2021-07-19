@@ -6,20 +6,33 @@ import (
 	"github.com/saicem/todo/model/todomodel"
 )
 
-func GetTodoItems(userId int) *[]todomodel.TodoItem {
+func GetTodoItems(userId int, createAt string, isGetCreateAt bool, keyword string, isGetKeyword bool, todoGroupId string, isGetTodoGroupId bool, isFinish string, isGetIsFinish bool) *[]todomodel.TodoItem {
 	var todoItems []todomodel.TodoItem
-	global.Mysql.Where("user_id = ?", userId).Find(&todoItems)
+	sql := global.Mysql.Where("user_id = ?", userId)
+	if isGetCreateAt {
+		sql = sql.Where("create_at < ?", createAt)
+	}
+	if isGetKeyword {
+		sql = sql.Where("LIKE", "%"+keyword+"%")
+	}
+	if isGetTodoGroupId {
+		sql = sql.Where("group_id =", todoGroupId)
+	}
+	if isGetIsFinish {
+		sql = sql.Where("is_finish = ", isFinish)
+	}
+	sql.Find(&todoItems)
 	return &todoItems
 }
 
-func CreateTodoItem(userId int, req request.TodoItemReq1) bool {
-	global.Mysql.Create(&todomodel.TodoItem{
+func CreateTodoItem(userId int, req *request.TodoItemReq1) bool {
+	res := global.Mysql.Create(&todomodel.TodoItem{
 		TodoTitle:   req.TodoTitle,
 		TodoContent: req.TodoContent,
 		TodoGroupId: req.TodoGroupId,
 		UserId:      userId,
 	})
-	return true
+	return res.Error == nil
 }
 
 func UpdateTodoItem(uid int, req request.TodoItemReq2, todoId string) bool {

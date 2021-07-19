@@ -17,14 +17,20 @@ import (
 // @Success 200 object response.Response
 func TodoAdd(c *gin.Context) {
 	userId, _ := c.Get("USERID")
-	var todoItemReq request.TodoItemReq1
+	var todoItemReq *request.TodoItemReq1
 	if err := c.BindJSON(&todoItemReq); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 	// todo 判断数据是否有效 是否可以存储
-	db.CreateTodoItem(userId.(int), todoItemReq)
-	c.JSON(http.StatusOK, response.Response{
-		Msg: "success",
+	isSuccess := db.CreateTodoItem(userId.(int), todoItemReq)
+	if isSuccess {
+		c.JSON(http.StatusOK, response.Response{
+			Msg: "success",
+		})
+		return
+	}
+	c.JSON(http.StatusNotAcceptable, response.Response{
+		Msg: "wrong group id",
 	})
 }

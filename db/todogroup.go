@@ -1,6 +1,8 @@
 package db
 
 import (
+	"log"
+
 	"github.com/saicem/todo/global"
 	"github.com/saicem/todo/model/request"
 	"github.com/saicem/todo/model/todomodel"
@@ -13,10 +15,14 @@ func GetTodoGroups(userId int) *[]todomodel.TodoGroup {
 }
 
 func CreateTodoGroup(userId int, req request.TodoGroupReq) bool {
-	global.Mysql.Create(&todomodel.TodoGroup{
+	res := global.Mysql.Create(&todomodel.TodoGroup{
 		TodoGroupName: req.TodoGroupName,
 		UserId:        userId,
 	})
+	if res.Error != nil {
+		log.Println(res.Error)
+		return false
+	}
 	return true
 }
 
