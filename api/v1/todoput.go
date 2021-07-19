@@ -13,6 +13,7 @@ import (
 // @Summary TodoPut
 // @Description 修改一个todo
 // @Router /todo/{id} [put]
+// @Param id path int true "todoId"
 // @Param json body request.TodoItemReq2 true "修改后的todo"
 // @Success 200 object response.Response
 func TodoPut(c *gin.Context) {

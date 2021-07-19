@@ -6,7 +6,16 @@ import (
 	"github.com/saicem/todo/model/todomodel"
 )
 
-func GetTodoItems(userId int, createAt string, isGetCreateAt bool, keyword string, isGetKeyword bool, todoGroupId string, isGetTodoGroupId bool, isFinish string, isGetIsFinish bool) *[]todomodel.TodoItem {
+func GetTodoItems(
+	userId int,
+	createAt string,
+	isGetCreateAt bool,
+	keyword string,
+	isGetKeyword bool,
+	todoGroupId string,
+	isGetTodoGroupId bool,
+	isFinish string,
+	isGetIsFinish bool) *[]todomodel.TodoItem {
 	var todoItems []todomodel.TodoItem
 	sql := global.Mysql.Where("user_id = ?", userId)
 	if isGetCreateAt {
@@ -35,9 +44,9 @@ func CreateTodoItem(userId int, req *request.TodoItemReq1) bool {
 	return res.Error == nil
 }
 
-func UpdateTodoItem(uid int, req request.TodoItemReq2, todoId string) bool {
-	todoItem := findTodoItem(uid, todoId)
-	if todoItem == nil {
+func UpdateTodoItem(uid int, req interface{}, todoId string) bool {
+	todoItem, isSuccess := findTodoItem(uid, todoId)
+	if !isSuccess {
 		return false
 	}
 	todoItem.TodoTitle = req.TodoTitle
@@ -49,16 +58,19 @@ func UpdateTodoItem(uid int, req request.TodoItemReq2, todoId string) bool {
 }
 
 func DeleteTodoItem(userId int, todoId string) bool {
-	todoItem := findTodoItem(userId, todoId)
-	if todoItem == nil {
+	todoItem, isSuccess := findTodoItem(userId, todoId)
+	if !isSuccess {
 		return false
 	}
 	global.Mysql.Delete(&todoItem)
 	return true
 }
 
-func findTodoItem(userId int, todoId string) *todomodel.TodoItem {
-	var todoItem todomodel.TodoItem
-	global.Mysql.Find(&todoItem, "user_id = ? AND todo_id = ?", userId, todoId)
-	return &todoItem
+func findTodoItem(userId int, todoId string) (*todomodel.TodoItem, bool) {
+	var todoItem *todomodel.TodoItem
+	res := global.Mysql.Find(&todoItem, "user_id = ? AND todo_id = ?", userId, todoId)
+	if res.Error != nil {
+		return nil, false
+	}
+	return todoItem, true
 }

@@ -25,8 +25,8 @@ func TodoGet(c *gin.Context) {
 	createAt, isGetCreateAt := c.GetQuery("create_at")
 	keyword, isGetKeyword := c.GetQuery("keyword")
 	todoGroupId, isGetTodoGroupId := c.GetQuery("todo_group_id")
-	isFinish, isGetIsFinish := c.GetQuery("is_finished")
-	loc, _ := time.LoadLocation("Asia/Shanghai") //设置时区
+	isFinished, isGetIsFinish := c.GetQuery("is_finished")
+	loc, _ := time.LoadLocation("Asia/Shanghai")
 	if isGetCreateAt {
 		if _, err := time.ParseInLocation("2006-01-02 15:04:05", createAt, loc); err != nil {
 			log.Println(err)
@@ -46,7 +46,7 @@ func TodoGet(c *gin.Context) {
 		}
 	}
 	if isGetIsFinish {
-		if _, err := strconv.ParseBool(isFinish); err != nil {
+		if _, err := strconv.ParseBool(isFinished); err != nil {
 			log.Println(err)
 			c.JSON(http.StatusNotAcceptable, response.Response{
 				Msg: "wrong type of is_finish",
@@ -54,7 +54,7 @@ func TodoGet(c *gin.Context) {
 			return
 		}
 	}
-	todoItems := db.GetTodoItems(userId.(int), createAt, isGetCreateAt, keyword, isGetKeyword, todoGroupId, isGetTodoGroupId, isFinish, isGetIsFinish)
+	todoItems := db.GetTodoItems(userId.(int), createAt, isGetCreateAt, keyword, isGetKeyword, todoGroupId, isGetTodoGroupId, isFinished, isGetIsFinish)
 	c.JSON(http.StatusOK, response.Response{
 		Msg:  "success",
 		Data: todoItems,

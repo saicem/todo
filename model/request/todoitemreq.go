@@ -9,5 +9,5 @@ type TodoItemReq2 struct {
 	TodoGroupId int    `json:"todo_group_id"`
 	TodoTitle   string `json:"todo_title"`
 	TodoContent string `json:"todo_content"`
-	IsFinished  bool   `json:"todo_finish"`
+	IsFinished  bool   `json:"is_finished"`
 }
