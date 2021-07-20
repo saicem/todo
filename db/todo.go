@@ -49,11 +49,10 @@ func UpdateTodoItem(uid int, req interface{}, todoId string) bool {
 	if !isSuccess {
 		return false
 	}
-	todoItem.TodoTitle = req.TodoTitle
-	todoItem.TodoContent = req.TodoContent
-	todoItem.TodoGroupId = req.TodoGroupId
-	todoItem.IsFinished = req.IsFinished
-	global.Mysql.Save(&todoItem)
+	res := global.Mysql.Model(&todoItem).Omit("id").Updates(req)
+	if res.Error != nil {
+		return false
+	}
 	return true
 }
 

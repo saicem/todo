@@ -5,7 +5,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/saicem/todo/db"
-	"github.com/saicem/todo/model/request"
 	"github.com/saicem/todo/model/response"
 )
 
@@ -17,7 +16,7 @@ import (
 // @Param json body request.TodoItemReq2 true "修改后的todo"
 // @Success 200 object response.Response
 func TodoPut(c *gin.Context) {
-	var todoItemReq request.TodoItemReq2
+	var todoItemReq interface{}
 	if err := c.ShouldBindJSON(&todoItemReq); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
@@ -30,6 +29,6 @@ func TodoPut(c *gin.Context) {
 		c.AbortWithStatus(http.StatusNotAcceptable)
 	}
 	c.JSON(http.StatusOK, response.Response{
-		Msg: "修改一个todo",
+		Msg: "update todo success",
 	})
 }
