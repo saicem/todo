@@ -50,10 +50,7 @@ func UpdateTodoItem(uid int, req interface{}, todoId string) bool {
 		return false
 	}
 	res := global.Mysql.Model(&todoItem).Omit("id").Updates(req)
-	if res.Error != nil {
-		return false
-	}
-	return true
+	return res.Error == nil
 }
 
 func DeleteTodoItem(userId int, todoId string) bool {

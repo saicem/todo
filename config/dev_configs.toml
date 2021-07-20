@@ -1,0 +1,26 @@
+[mysql]
+addr = "localhost:3306"
+name = "todo"
+pass = ""
+user = "root"
+config = "charset=utf8mb4&parseTime=True&loc=Local"
+connmaxlifetime = 60
+maxidleconn = 60
+maxopenconn = 10
+
+[redis]
+addr = "127.0.0.1:6379"
+captchaduration = 60
+
+[session]
+maxage = 600
+domain = "localhost"
+
+[web]
+cors = 'http://localhost:8080'
+
+[email]
+serverhost = "smtp.163.com"
+serverport = "465"
+fromemail = "saicem@163.com"
+frompassword = "NQURVHJYBLLSSSXU"

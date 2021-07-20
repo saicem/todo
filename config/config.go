@@ -2,6 +2,7 @@ package config
 
 import (
 	"log"
+	"os"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
@@ -18,7 +19,14 @@ type Config struct {
 }
 
 func init() {
-	viper.SetConfigName("configs")
+	env := os.Getenv("TODO_ENV")
+	if env == "" {
+		env = "dev"
+		log.Println("not set TODO_ENV the default mode is dev")
+	} else {
+		log.Println(env)
+	}
+	viper.SetConfigName(env + "_configs")
 	viper.SetConfigType("toml")
 	viper.AddConfigPath("./config")
 
