@@ -18,21 +18,22 @@ RUN go mod download
 COPY . .
 
 # 将我们的代码编译成二进制可执行文件 bubble
-RUN go build -o bubble .
+RUN go build -o go-todo .
 
 ###################
 # 接下来创建一个小镜像
 ###################
+ca-certificate
 FROM scratch
 
-COPY . .
+COPY ./config/docker_configs.toml ./config/docker_configs.toml
 
 # 从builder镜像中把/dist/app 拷贝到当前目录
-COPY --from=builder /build/bubble /
+COPY --from=builder /build/go-todo /
 
 ENV TODO_ENV=docker
 
 EXPOSE 9101
 
 # 需要运行的命令
-ENTRYPOINT ["/bubble", "conf/config.ini"]
+ENTRYPOINT ["/go-todo"]
